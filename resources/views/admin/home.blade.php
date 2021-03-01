@@ -3,20 +3,14 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
+        <div class="col-md-4 d-flex flex-column">
+          <a href="admin" class="btn btn-primary m-2 p-2">dashboard</a>
+          <a href="#" class="btn btn-primary m-2 p-2">articoli</a>
+          <a href="#" class="btn btn-primary m-2 p-2">categorie</a>
+          <a href="#" class="btn btn-primary m-2 p-2">tags</a>
+        </div>
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    {{ __('You are logged in!') }}
-                </div>
-            </div>
+          <h1>admin > dashboard</h1>
         </div>
     </div>
 </div>
