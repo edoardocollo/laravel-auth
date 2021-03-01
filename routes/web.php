@@ -24,4 +24,4 @@ Route::get('about', 'Guest\PagesController@about')->name('about');
 Auth::routes(['register' => false]);
 
 Route::get('/admin', 'Admin\PagesController@index')->name('admin');
-Route::get('admin/articoli', 'Admin\ArticleController@index')->name('articoli');
+Route::resource('admin/articoli', 'Admin\ArticleController');

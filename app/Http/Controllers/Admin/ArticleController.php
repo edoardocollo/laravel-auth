@@ -8,6 +8,17 @@ use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,7 +26,8 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        return view('admin.articoli.index');
+        $articles = Article::all();
+        return view('admin.articoli.index',compact('articles'));
     }
 
     /**
@@ -25,7 +37,7 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.articoli.create');
     }
 
     /**
@@ -36,7 +48,21 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+      $request->validate([
+      'titolo' => 'required',
+      'autore' => 'required',
+      'contenuto' => 'required',
+    ]);
+
+
+    $newArticle = new Article;
+    $newArticle->titolo = $request->titolo;
+    $newArticle->contenuto = $request->contenuto;
+    $newArticle->autore = $request->autore;
+    $newArticle->save();
+
+    return redirect()->route('articoli.index');
+
     }
 
     /**
@@ -45,9 +71,10 @@ class ArticleController extends Controller
      * @param  \App\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function show(Article $article)
+    public function show( $article)
     {
-        //
+        $articleTarget = Article::find($article);
+        return view('admin.articoli.show', compact('articleTarget'));
     }
 
     /**
@@ -56,9 +83,12 @@ class ArticleController extends Controller
      * @param  \App\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function edit(Article $article)
+    public function edit( $article)
     {
-        //
+
+      $articleTarget = Article::find($article);
+      return view('admin.articoli.edit', compact('articleTarget'));
+
     }
 
     /**
@@ -68,9 +98,22 @@ class ArticleController extends Controller
      * @param  \App\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Article $article)
+    public function update(Request $request,  $article)
     {
-        //
+      $request->validate([
+      'titolo' => 'required',
+      'autore' => 'required',
+      'contenuto' => 'required',
+    ]);
+
+
+    $articletarget = Article::find($article);
+    $articletarget->titolo = $request->titolo;
+    $articletarget->contenuto = $request->contenuto;
+    $articletarget->autore = $request->autore;
+    $articletarget->update();
+    return redirect()->route('articoli.index');
+
     }
 
     /**
@@ -79,8 +122,11 @@ class ArticleController extends Controller
      * @param  \App\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Article $article)
+    public function destroy($article)
     {
-        //
+      $articletarget = Article::find($article);
+      $articletarget->delete();
+      return redirect()->route('articoli.index');
+
     }
 }
