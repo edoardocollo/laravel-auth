@@ -13,9 +13,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/', 'Guest\PagesController@index')->name('index');
+Route::get('blog', 'Guest\PagesController@blog')->name('blog');
+Route::get('about', 'Guest\PagesController@about')->name('about');
+
 
 Auth::routes(['register' => false]);
 
