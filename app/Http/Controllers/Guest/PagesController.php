@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers\Guest;
-
 use App\Http\Controllers\Controller;
+use App\Article;
 use Illuminate\Http\Request;
 
 class PagesController extends Controller
@@ -13,7 +13,8 @@ class PagesController extends Controller
   }
   public function blog()
   {
-    return view('guest.blog');
+    $articles = Article::all();
+    return view('guest.blog', compact('articles'));
   }
   public function about()
   {
